@@ -16,9 +16,9 @@ The electric guitar that we know and love is, almost always, a purely analog dev
 
 ### Shortfalls
 
-An electric guitar by itself hardly even counts as an instrument. Without equipment to amplify the output signal (often on the order of milliwatts) to a usable volume.
+An electric guitar by itself hardly even counts as an instrument. Without equipment to amplify the output signal (often on the order of milliwatts) to a usable volume, it becomes a very poorly designed acoustic.
 
-A very common component of music played with an electric guitar are "effect" or modifications to the sound of the instrument. Being analog in nature, effects are usually applied by "pedals", which are additional analog circuits that are activated with your foot while playing. These are connected in series between the guitar and the amplifier, allowing the player to alter the sound the the instrument while playing to achieve interesting results.
+A very common component of music played with an electric guitar are "effects" or modifications to the sound of the instrument. Being analog in nature, effects are usually applied by "pedals", which are additional analog circuits that are activated with your foot while playing. These are connected in series between the guitar and the amplifier, allowing the player to alter the sound the the instrument while playing to achieve interesting results.
 
 Preamps, amplifiers, and pedals are all pieces of equipment which may be necessary to use an electric guitar. These can be very expensive, partially because of the complexities of analog design.
 
@@ -146,18 +146,30 @@ A PCB of some kind for this project is essentially required. The system needs to
 | 1 | ADC | [https://www.digikey.com/en/products/detail/texas-instruments/TAA3040IRTWR/25676406](https://www.digikey.com/en/products/detail/texas-instruments/TAA3040IRTWR/25676406) |
 | 1 | DAC | [https://www.digikey.com/en/products/detail/texas-instruments/TAD5112IRGER/26251062](https://www.digikey.com/en/products/detail/texas-instruments/TAD5112IRGER/26251062) |
 | 1 | Low-Voltage OpAmp | [https://www.mouser.com/en/ProductDetail/STMicroelectronics/TSX634IYPT?qs=Rlwi1sSxVL5taZHfZVZPDA%3D%3D](https://www.mouser.com/en/ProductDetail/STMicroelectronics/TSX634IYPT?qs=Rlwi1sSxVL5taZHfZVZPDA%3D%3D) |
+| 1 | 5V - 3.3V Voltage Regulator | [https://www.digikey.com/en/products/base-product/onsemi/488/NCP1117/151453](https://www.digikey.com/en/products/base-product/onsemi/488/NCP1117/151453) |
 | 1 | USB-C Breakout | [https://adafruit.com/product/4090](https://adafruit.com/product/4090) |
 
 ## Related Works
 
-* Title: DS-Pi | RP2040 Audio DSP Board
-* URL: [https://hackaday.io/project/184811-ds-pi-rp2040-audio-dsp-board](https://hackaday.io/project/184811-ds-pi-rp2040-audio-dsp-board)
-* Summary: Open-source audio DSP platform based on the RP2040 and using an audio codec. Totally unrelated to the guitar part, but otherwise similar.
+### PolyMap Pickup System
 
-* Title: Guitar Effects List
-* URL: [https://spartanmusic.co.uk/blogs/smblog/12134577-for-beginners-full-list-of-guitar-pedals-effects](https://spartanmusic.co.uk/blogs/smblog/12134577-for-beginners-full-list-of-guitar-pedals-effects)
-* Summary: Not a project. Just a list of effects for inspiration.
+* __URL:__
+  * Blog: [https://darkartguitars.com/blog/polymap](https://darkartguitars.com/blog/polymap)
+  * Video: [https://www.youtube.com/watch?v=6SRUF4_frlk&t=5s](https://www.youtube.com/watch?v=6SRUF4_frlk&t=5s)
+  * GitHub: [https://github.com/IIP-Group/polymap/tree/main](https://github.com/IIP-Group/polymap/tree/main)
+* __Summary:__ Very similar in spirit to the goals of this project, but using a much more complex array of 64 piezoelectric pickups, giving 8 data points per string. Because of this, an FPGA is used for the processing over a microcontroller to handle the bandwidth.
 
-* Title: Modeling Guitar
-* URL: [https://www.thomannmusic.com/onlineexpert_page_midi_and_modelling_guitars_modelling_guitars.html](https://www.thomannmusic.com/onlineexpert_page_midi_and_modelling_guitars_modelling_guitars.html)
-* Summary: Turns out the thing I'm imagining is called a "modeling guitar". They do exist, but I can't find an open-source project or community surrounding them.
+### Modeling Guitar
+
+* __URL:__ [https://www.thomannmusic.com/onlineexpert_page_midi_and_modelling_guitars_modelling_guitars.html](https://www.thomannmusic.com/onlineexpert_page_midi_and_modelling_guitars_modelling_guitars.html)
+* __Summary:__ Turns out the thing I'm imagining is called a "modeling guitar". They do exist, but I can't find an open-source project or community surrounding them.
+
+### DS-Pi | RP2040 Audio DSP Board
+
+* __URL:__ [https://hackaday.io/project/184811-ds-pi-rp2040-audio-dsp-board](https://hackaday.io/project/184811-ds-pi-rp2040-audio-dsp-board)
+* __Summary:__ Open-source audio DSP platform based on the RP2040 and using an audio codec. Totally unrelated to the guitar part, but otherwise similar.
+
+### Guitar Effects List
+
+* __URL:__ [https://spartanmusic.co.uk/blogs/smblog/12134577-for-beginners-full-list-of-guitar-pedals-effects](https://spartanmusic.co.uk/blogs/smblog/12134577-for-beginners-full-list-of-guitar-pedals-effects)
+* __Summary:__ Not a project. Just a list of effects for inspiration.

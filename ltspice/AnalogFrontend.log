@@ -1,0 +1,17 @@
+LTspice 24.1.10 for Windows
+Circuit: C:\Users\eccoc\OneDrive\Documents\ECE362-Project\ltspice\AnalogFrontend.net
+Start Time: Tue Oct 13 22:49:37 2026
+solver = Normal
+Maximum thread count: 16
+tnom = 27
+temp = 27
+method = trap
+WARNING: Node n004 is floating.
+
+Direct Newton iteration for .op point succeeded.
+Total elapsed time: 0.052 seconds.
+
+Files loaded:
+C:\Users\eccoc\OneDrive\Documents\ECE362-Project\ltspice\AnalogFrontend.net
+C:\Users\eccoc\AppData\Local\LTspice\lib\sub\UniversalOpAmp1.lib
+

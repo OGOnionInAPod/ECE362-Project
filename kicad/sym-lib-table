@@ -2,4 +2,5 @@
 	(version 7)
 	(lib (name "tad5112") (type "KiCad") (uri "${KIPRJMOD}/TAD5112/tad5112.kicad_sym") (options "") (descr ""))
 	(lib (name "2026-10-03_18-02-37") (type "KiCad") (uri "${KIPRJMOD}/ul_TAA3040IRTWR/KiCADv6/2026-10-03_18-02-37.kicad_sym") (options "") (descr ""))
+	(lib (name "SJ1-3543N") (type "KiCad") (uri "${KIPRJMOD}/SJ1-3543N/SJ1-3543N.kicad_sym") (options "") (descr ""))
 )

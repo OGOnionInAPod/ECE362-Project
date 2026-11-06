@@ -1,0 +1,5 @@
+(fp_lib_table
+	(version 7)
+	(lib (name "ece362project") (type "KiCad") (uri "${KIPRJMOD}/362_project/ece362project.pretty") (options "") (descr ""))
+	(lib (name "SJ1-3543N") (type "KiCad") (uri "${KIPRJMOD}/SJ1-3543N") (options "") (descr ""))
+)

@@ -1271,7 +1271,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder"
 			(at 131.572 74.93 90)
 			(hide yes)
 			(show_name no)
@@ -1305,14 +1305,14 @@
 			)
 		)
 		(pin "2"
-			(uuid "8633c37c-916c-4969-8b16-3246f8212ffd")
+			(uuid "500a9098-a7e7-4893-b2be-9132f39a6b50")
 		)
 		(pin "1"
-			(uuid "2b9258a4-f780-4c57-bb3b-a2b0fa94c7a3")
+			(uuid "c4696060-3409-4a04-873b-02b0288f9ffd")
 		)
 		(instances
 			(project "Guitar"
-				(path "/42da27dc-81c4-4ef8-94db-357df04773d2/2aba858e-c1fa-4d86-9937-731586b033b3"
+				(path "/42da27dc-81c4-4ef8-94db-357df04773d2/00c3c7cb-5a32-4b74-a28f-ac8f50064a95"
 					(reference "R6")
 					(unit 1)
 				)
@@ -1430,23 +1430,23 @@
 			)
 		)
 		(pin "1"
-			(uuid "eb8aa502-b4af-4d38-bfa2-fc44ba9752c9")
+			(uuid "14b9f658-e14f-4867-b1c6-6fec010e4ee5")
 		)
 		(pin "3"
-			(uuid "4c6df362-d1ea-465d-a171-7f2b9b2cdda3")
+			(uuid "c007057e-4e26-447b-8538-6bb26dbae791")
 		)
 		(pin "4"
-			(uuid "87a75224-cc57-4742-ae6c-4f5c6cd219e0")
+			(uuid "3d939abf-3776-451f-b1b3-e743f2d3bcd5")
 		)
 		(pin "2"
-			(uuid "40fe6141-edb2-41db-b7e2-d924dea2b302")
+			(uuid "56b8d89a-ec92-441a-bdc0-4ae046fdcc22")
 		)
 		(pin "5"
-			(uuid "280e2595-848e-437a-af05-2e89b5b72d28")
+			(uuid "2e773fb8-c49e-4d90-809c-710e7d98e9cd")
 		)
 		(instances
 			(project "Guitar"
-				(path "/42da27dc-81c4-4ef8-94db-357df04773d2/2aba858e-c1fa-4d86-9937-731586b033b3"
+				(path "/42da27dc-81c4-4ef8-94db-357df04773d2/00c3c7cb-5a32-4b74-a28f-ac8f50064a95"
 					(reference "U4")
 					(unit 1)
 				)
@@ -1520,11 +1520,11 @@
 			)
 		)
 		(pin "1"
-			(uuid "ce6a1f1c-e515-4536-a33f-4e589d795b84")
+			(uuid "29d9ba04-15bb-471b-8ed0-54b20e757ffa")
 		)
 		(instances
 			(project "Guitar"
-				(path "/42da27dc-81c4-4ef8-94db-357df04773d2/2aba858e-c1fa-4d86-9937-731586b033b3"
+				(path "/42da27dc-81c4-4ef8-94db-357df04773d2/00c3c7cb-5a32-4b74-a28f-ac8f50064a95"
 					(reference "#PWR09")
 					(unit 1)
 				)
@@ -1598,11 +1598,11 @@
 			)
 		)
 		(pin "1"
-			(uuid "77bcc06a-e6e5-459d-aa59-ce84dca1736f")
+			(uuid "38a7f12a-c7cd-477e-8c7d-5de02527e209")
 		)
 		(instances
 			(project "Guitar"
-				(path "/42da27dc-81c4-4ef8-94db-357df04773d2/2aba858e-c1fa-4d86-9937-731586b033b3"
+				(path "/42da27dc-81c4-4ef8-94db-357df04773d2/00c3c7cb-5a32-4b74-a28f-ac8f50064a95"
 					(reference "#PWR011")
 					(unit 1)
 				)
@@ -1641,7 +1641,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder"
 			(at 125.73 99.06 0)
 			(hide yes)
 			(show_name no)
@@ -1675,14 +1675,14 @@
 			)
 		)
 		(pin "1"
-			(uuid "6d79248b-28f7-44ed-baf0-f86f1edfc3bf")
+			(uuid "71add1c4-2df9-44fa-b4f8-e662541c8753")
 		)
 		(pin "2"
-			(uuid "55e2deb6-e854-418c-9753-71001d00b748")
+			(uuid "cc0cc1b8-1837-4490-8543-b9e981181337")
 		)
 		(instances
 			(project "Guitar"
-				(path "/42da27dc-81c4-4ef8-94db-357df04773d2/2aba858e-c1fa-4d86-9937-731586b033b3"
+				(path "/42da27dc-81c4-4ef8-94db-357df04773d2/00c3c7cb-5a32-4b74-a28f-ac8f50064a95"
 					(reference "C2")
 					(unit 1)
 				)
@@ -1723,7 +1723,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder"
 			(at 133.35 96.52 0)
 			(hide yes)
 			(show_name no)
@@ -1757,14 +1757,14 @@
 			)
 		)
 		(pin "2"
-			(uuid "6328b5ed-f321-4b08-8a88-db3a758df311")
+			(uuid "477064d1-10fd-4316-9b2e-891abe4afa21")
 		)
 		(pin "1"
-			(uuid "e097ac14-6a13-44a9-b03a-ad62b7cb7a70")
+			(uuid "8fa7397d-a9fe-43b1-ad72-cf4582f4dc2c")
 		)
 		(instances
 			(project "Guitar"
-				(path "/42da27dc-81c4-4ef8-94db-357df04773d2/2aba858e-c1fa-4d86-9937-731586b033b3"
+				(path "/42da27dc-81c4-4ef8-94db-357df04773d2/00c3c7cb-5a32-4b74-a28f-ac8f50064a95"
 					(reference "R7")
 					(unit 1)
 				)
@@ -1803,7 +1803,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder"
 			(at 125.73 71.12 0)
 			(hide yes)
 			(show_name no)
@@ -1837,14 +1837,14 @@
 			)
 		)
 		(pin "1"
-			(uuid "3a42e447-18ad-40f8-b83b-00269d1e76bd")
+			(uuid "39f25896-9e46-4b14-b7f6-3af22a3c1982")
 		)
 		(pin "2"
-			(uuid "e7e54489-3e98-4294-8ae8-459190468149")
+			(uuid "3b056772-e39a-4119-b1a1-e76ceb54465c")
 		)
 		(instances
 			(project "Guitar"
-				(path "/42da27dc-81c4-4ef8-94db-357df04773d2/2aba858e-c1fa-4d86-9937-731586b033b3"
+				(path "/42da27dc-81c4-4ef8-94db-357df04773d2/00c3c7cb-5a32-4b74-a28f-ac8f50064a95"
 					(reference "C1")
 					(unit 1)
 				)
@@ -1962,23 +1962,23 @@
 			)
 		)
 		(pin "1"
-			(uuid "85b9f88e-ad32-465d-be9a-7d4144314d07")
+			(uuid "6ed34163-f027-4bdb-a597-177f5397d08e")
 		)
 		(pin "3"
-			(uuid "084b1b17-f255-40a7-9f9c-565e300b283e")
+			(uuid "45ea857f-6119-4e3b-adb7-fa7a8e9b8297")
 		)
 		(pin "4"
-			(uuid "d74cda42-778e-4040-b290-1b3590c4aa58")
+			(uuid "ced62395-992d-4687-8b15-3ad8812f2aa6")
 		)
 		(pin "2"
-			(uuid "2623a02e-9a44-4964-9941-7c25b22322f1")
+			(uuid "8138fb76-9efe-44a4-997b-ae15b2330bdf")
 		)
 		(pin "5"
-			(uuid "8b5f3655-c3b8-4a48-b870-50379fd2bf54")
+			(uuid "97f2d14c-7841-43bd-8b62-dd4ad1666b9a")
 		)
 		(instances
 			(project "Guitar"
-				(path "/42da27dc-81c4-4ef8-94db-357df04773d2/2aba858e-c1fa-4d86-9937-731586b033b3"
+				(path "/42da27dc-81c4-4ef8-94db-357df04773d2/00c3c7cb-5a32-4b74-a28f-ac8f50064a95"
 					(reference "U2")
 					(unit 1)
 				)
@@ -2052,11 +2052,11 @@
 			)
 		)
 		(pin "1"
-			(uuid "d52fb7be-c00d-41dc-9f1a-20391893e92a")
+			(uuid "2599e62c-1fad-45bc-b9bc-0664c588329d")
 		)
 		(instances
 			(project "Guitar"
-				(path "/42da27dc-81c4-4ef8-94db-357df04773d2/2aba858e-c1fa-4d86-9937-731586b033b3"
+				(path "/42da27dc-81c4-4ef8-94db-357df04773d2/00c3c7cb-5a32-4b74-a28f-ac8f50064a95"
 					(reference "#PWR03")
 					(unit 1)
 				)
@@ -2086,14 +2086,15 @@
 				)
 			)
 		)
-		(property "Value" "+3.3V"
-			(at 147.32 88.9 0)
+		(property "Value" "+3V3"
+			(at 149.86 92.7099 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
+				(justify left)
 			)
 		)
 		(property "Footprint" ""
@@ -2130,11 +2131,11 @@
 			)
 		)
 		(pin "1"
-			(uuid "c3a1af04-64af-46c1-b50a-37e8e452c73c")
+			(uuid "22f7d693-9d2f-4acc-be1a-e8b11cbb37ea")
 		)
 		(instances
 			(project "Guitar"
-				(path "/42da27dc-81c4-4ef8-94db-357df04773d2/2aba858e-c1fa-4d86-9937-731586b033b3"
+				(path "/42da27dc-81c4-4ef8-94db-357df04773d2/00c3c7cb-5a32-4b74-a28f-ac8f50064a95"
 					(reference "#PWR013")
 					(unit 1)
 				)
@@ -2208,11 +2209,11 @@
 			)
 		)
 		(pin "1"
-			(uuid "9502a888-3b99-44fd-92d9-0a478523b527")
+			(uuid "fd269415-94c7-4364-a486-ff93c060ee9c")
 		)
 		(instances
 			(project "Guitar"
-				(path "/42da27dc-81c4-4ef8-94db-357df04773d2/2aba858e-c1fa-4d86-9937-731586b033b3"
+				(path "/42da27dc-81c4-4ef8-94db-357df04773d2/00c3c7cb-5a32-4b74-a28f-ac8f50064a95"
 					(reference "#PWR017")
 					(unit 1)
 				)
@@ -2330,23 +2331,23 @@
 			)
 		)
 		(pin "1"
-			(uuid "1902d0e0-f21a-4f41-b73d-cc63c82284f6")
+			(uuid "6c5b22ef-08a7-4feb-b829-4fa83745ba98")
 		)
 		(pin "3"
-			(uuid "ecbc1ef6-5027-4884-b269-60bbb41fcf77")
+			(uuid "e9722617-0196-41d9-bfa0-10aa2198cf8f")
 		)
 		(pin "4"
-			(uuid "40241e2e-2a13-4ca8-bf94-8a541d4d9a16")
+			(uuid "97c642f0-bc9e-4c03-b2b6-d08226fb6900")
 		)
 		(pin "2"
-			(uuid "0a53ee2b-0d1d-4026-b3c7-35e65ed6bb6f")
+			(uuid "7eadab67-698f-4f72-a1bb-2eeed5be87c4")
 		)
 		(pin "5"
-			(uuid "abd6cd1b-fbc7-41b7-a24e-921a3d69f33c")
+			(uuid "d57156d1-f40b-48df-b28c-c0e698969e13")
 		)
 		(instances
 			(project "Guitar"
-				(path "/42da27dc-81c4-4ef8-94db-357df04773d2/2aba858e-c1fa-4d86-9937-731586b033b3"
+				(path "/42da27dc-81c4-4ef8-94db-357df04773d2/00c3c7cb-5a32-4b74-a28f-ac8f50064a95"
 					(reference "U5")
 					(unit 1)
 				)
@@ -2385,7 +2386,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder"
 			(at 125.73 127 0)
 			(hide yes)
 			(show_name no)
@@ -2419,14 +2420,14 @@
 			)
 		)
 		(pin "1"
-			(uuid "14eaedad-1c36-4763-be2b-dc8343ea432f")
+			(uuid "ee3af824-2d8f-415b-a7fc-1c497b824bfc")
 		)
 		(pin "2"
-			(uuid "679786b4-22a1-4e67-9a99-5bf15307d341")
+			(uuid "d1c38947-5958-4d07-bc5b-744e3090e474")
 		)
 		(instances
 			(project "Guitar"
-				(path "/42da27dc-81c4-4ef8-94db-357df04773d2/2aba858e-c1fa-4d86-9937-731586b033b3"
+				(path "/42da27dc-81c4-4ef8-94db-357df04773d2/00c3c7cb-5a32-4b74-a28f-ac8f50064a95"
 					(reference "C3")
 					(unit 1)
 				)
@@ -2467,7 +2468,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder"
 			(at 133.35 124.46 0)
 			(hide yes)
 			(show_name no)
@@ -2501,14 +2502,14 @@
 			)
 		)
 		(pin "2"
-			(uuid "619b3395-d23a-467d-857e-9f796e88800e")
+			(uuid "51ad2501-fad3-4203-a337-41f23c7fc326")
 		)
 		(pin "1"
-			(uuid "1f7928f8-8fd3-4606-854f-200ff3b26fe7")
+			(uuid "289877fb-3286-4d3c-b521-e3434a1ab09d")
 		)
 		(instances
 			(project "Guitar"
-				(path "/42da27dc-81c4-4ef8-94db-357df04773d2/2aba858e-c1fa-4d86-9937-731586b033b3"
+				(path "/42da27dc-81c4-4ef8-94db-357df04773d2/00c3c7cb-5a32-4b74-a28f-ac8f50064a95"
 					(reference "R9")
 					(unit 1)
 				)
@@ -2538,14 +2539,15 @@
 				)
 			)
 		)
-		(property "Value" "+3.3V"
-			(at 147.32 116.84 0)
+		(property "Value" "+3V3"
+			(at 149.86 120.6499 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
+				(justify left)
 			)
 		)
 		(property "Footprint" ""
@@ -2582,11 +2584,11 @@
 			)
 		)
 		(pin "1"
-			(uuid "01908026-fed1-4d56-a164-a30b20a352f2")
+			(uuid "8f31e21f-92ee-4cb9-a781-cb925a9443aa")
 		)
 		(instances
 			(project "Guitar"
-				(path "/42da27dc-81c4-4ef8-94db-357df04773d2/2aba858e-c1fa-4d86-9937-731586b033b3"
+				(path "/42da27dc-81c4-4ef8-94db-357df04773d2/00c3c7cb-5a32-4b74-a28f-ac8f50064a95"
 					(reference "#PWR018")
 					(unit 1)
 				)
@@ -2659,11 +2661,11 @@
 			)
 		)
 		(pin "1"
-			(uuid "88619e43-2ba1-440f-99b7-31b50a6b6bde")
+			(uuid "dc9bc603-b65a-4fa9-8125-145e553dc724")
 		)
 		(instances
 			(project "Guitar"
-				(path "/42da27dc-81c4-4ef8-94db-357df04773d2/2aba858e-c1fa-4d86-9937-731586b033b3"
+				(path "/42da27dc-81c4-4ef8-94db-357df04773d2/00c3c7cb-5a32-4b74-a28f-ac8f50064a95"
 					(reference "#PWR019")
 					(unit 1)
 				)
@@ -2704,7 +2706,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder"
 			(at 133.35 68.58 0)
 			(hide yes)
 			(show_name no)
@@ -2738,14 +2740,14 @@
 			)
 		)
 		(pin "2"
-			(uuid "74d4418d-86d7-433e-8a97-6defdb6ad33b")
+			(uuid "9dd420ae-8060-4800-a497-c5a5df8ae39c")
 		)
 		(pin "1"
-			(uuid "b1894932-62bc-47bb-8ab8-38ba1e79f6e2")
+			(uuid "ab92966d-bcce-4068-8a6d-a0f785c93f64")
 		)
 		(instances
 			(project "Guitar"
-				(path "/42da27dc-81c4-4ef8-94db-357df04773d2/2aba858e-c1fa-4d86-9937-731586b033b3"
+				(path "/42da27dc-81c4-4ef8-94db-357df04773d2/00c3c7cb-5a32-4b74-a28f-ac8f50064a95"
 					(reference "R5")
 					(unit 1)
 				)
@@ -2818,11 +2820,11 @@
 			)
 		)
 		(pin "1"
-			(uuid "4a641f30-bb39-4ca2-a05d-3a4930a22e77")
+			(uuid "bff937e4-4043-4e34-9766-2fef687f2469")
 		)
 		(instances
 			(project "Guitar"
-				(path "/42da27dc-81c4-4ef8-94db-357df04773d2/2aba858e-c1fa-4d86-9937-731586b033b3"
+				(path "/42da27dc-81c4-4ef8-94db-357df04773d2/00c3c7cb-5a32-4b74-a28f-ac8f50064a95"
 					(reference "#PWR04")
 					(unit 1)
 				)
@@ -2863,7 +2865,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder"
 			(at 131.572 102.87 90)
 			(hide yes)
 			(show_name no)
@@ -2897,14 +2899,14 @@
 			)
 		)
 		(pin "2"
-			(uuid "4671b208-a50c-451f-9789-3177c172e8f3")
+			(uuid "804e1ffb-21be-43ea-a8aa-1482b4da4ab8")
 		)
 		(pin "1"
-			(uuid "edf0362c-1ef9-4367-94bc-97fae3eda571")
+			(uuid "553ffefa-7b2b-4716-a22d-e764dcfb99b3")
 		)
 		(instances
 			(project "Guitar"
-				(path "/42da27dc-81c4-4ef8-94db-357df04773d2/2aba858e-c1fa-4d86-9937-731586b033b3"
+				(path "/42da27dc-81c4-4ef8-94db-357df04773d2/00c3c7cb-5a32-4b74-a28f-ac8f50064a95"
 					(reference "R8")
 					(unit 1)
 				)
@@ -2978,11 +2980,11 @@
 			)
 		)
 		(pin "1"
-			(uuid "89b3b206-ebb0-4591-bc19-ec99555ae5a7")
+			(uuid "8a8a6ad2-26e6-41cf-917f-c6ba4062ca56")
 		)
 		(instances
 			(project "Guitar"
-				(path "/42da27dc-81c4-4ef8-94db-357df04773d2/2aba858e-c1fa-4d86-9937-731586b033b3"
+				(path "/42da27dc-81c4-4ef8-94db-357df04773d2/00c3c7cb-5a32-4b74-a28f-ac8f50064a95"
 					(reference "#PWR012")
 					(unit 1)
 				)
@@ -3055,11 +3057,11 @@
 			)
 		)
 		(pin "1"
-			(uuid "c184f37d-f021-4426-8d14-14f3fd330386")
+			(uuid "97427e9e-5455-4c05-99b7-4903371c6020")
 		)
 		(instances
 			(project "Guitar"
-				(path "/42da27dc-81c4-4ef8-94db-357df04773d2/2aba858e-c1fa-4d86-9937-731586b033b3"
+				(path "/42da27dc-81c4-4ef8-94db-357df04773d2/00c3c7cb-5a32-4b74-a28f-ac8f50064a95"
 					(reference "#PWR014")
 					(unit 1)
 				)
@@ -3076,7 +3078,6 @@
 		(on_board yes)
 		(in_pos_files yes)
 		(dnp no)
-		(fields_autoplaced yes)
 		(uuid "d74a195f-6b54-4d4f-a8d6-302c7af3fad5")
 		(property "Reference" "#PWR02"
 			(at 147.32 69.85 0)
@@ -3089,14 +3090,15 @@
 				)
 			)
 		)
-		(property "Value" "+3.3V"
-			(at 147.32 60.96 0)
+		(property "Value" "+3V3"
+			(at 145.034 60.452 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
+				(justify left)
 			)
 		)
 		(property "Footprint" ""
@@ -3133,11 +3135,11 @@
 			)
 		)
 		(pin "1"
-			(uuid "ecc0c8a1-2adb-4ddd-a4af-f9545304df08")
+			(uuid "f13633f8-44c0-41b8-91d1-fd7adb4d5c73")
 		)
 		(instances
 			(project "Guitar"
-				(path "/42da27dc-81c4-4ef8-94db-357df04773d2/2aba858e-c1fa-4d86-9937-731586b033b3"
+				(path "/42da27dc-81c4-4ef8-94db-357df04773d2/00c3c7cb-5a32-4b74-a28f-ac8f50064a95"
 					(reference "#PWR02")
 					(unit 1)
 				)
@@ -3178,7 +3180,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder"
 			(at 131.572 130.81 90)
 			(hide yes)
 			(show_name no)
@@ -3212,14 +3214,14 @@
 			)
 		)
 		(pin "2"
-			(uuid "3d0ec50c-d13b-4ef2-aa0d-71e9b4aabd80")
+			(uuid "c9dec0e2-542d-4f42-8411-40fee3383833")
 		)
 		(pin "1"
-			(uuid "32cb4132-6262-4099-b033-79233f287098")
+			(uuid "24eb0b29-82b7-4ab5-b4e1-bfc1dcdca470")
 		)
 		(instances
 			(project "Guitar"
-				(path "/42da27dc-81c4-4ef8-94db-357df04773d2/2aba858e-c1fa-4d86-9937-731586b033b3"
+				(path "/42da27dc-81c4-4ef8-94db-357df04773d2/00c3c7cb-5a32-4b74-a28f-ac8f50064a95"
 					(reference "R10")
 					(unit 1)
 				)
@@ -3293,11 +3295,11 @@
 			)
 		)
 		(pin "1"
-			(uuid "4900351c-0a84-4a77-99df-d28d68ce81f1")
+			(uuid "7600fe89-accd-4821-8aa1-382ebe1f3124")
 		)
 		(instances
 			(project "Guitar"
-				(path "/42da27dc-81c4-4ef8-94db-357df04773d2/2aba858e-c1fa-4d86-9937-731586b033b3"
+				(path "/42da27dc-81c4-4ef8-94db-357df04773d2/00c3c7cb-5a32-4b74-a28f-ac8f50064a95"
 					(reference "#PWR016")
 					(unit 1)
 				)

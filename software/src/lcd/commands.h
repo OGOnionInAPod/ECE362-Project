@@ -9,6 +9,9 @@ typedef struct {
     size_t retc;
 } lcd_command_t;
 
+lcd_command_t lcd_command_write_n(uint32_t n);
+lcd_command_t lcd_command_read_n(uint32_t n);
+
 extern const lcd_command_t LCD_COM_SWRESET;
 extern const lcd_command_t LCD_COM_RDDCOLMOD;
 extern const lcd_command_t LCD_COM_SLPOUT;

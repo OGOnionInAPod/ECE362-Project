@@ -1,5 +1,15 @@
 #include "commands.h"
 
+lcd_command_t lcd_command_write_n(uint32_t n) {
+    lcd_command_t w = LCD_COM_RAMWR; w.argc = n;
+    return w;
+}
+
+lcd_command_t lcd_command_read_n(uint32_t n) {
+    lcd_command_t r = LCD_COM_RAMRD; r.argc = n;
+    return r;
+}
+
 const lcd_command_t LCD_COM_SWRESET = {
     .opcode = 0x01,
     .argc = 0,

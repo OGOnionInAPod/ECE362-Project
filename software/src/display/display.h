@@ -1,6 +1,6 @@
 #ifndef DISPLAY_H
 #define DISPLAY_H
 
-void display_loop();
+void start_display();
 
 #endif

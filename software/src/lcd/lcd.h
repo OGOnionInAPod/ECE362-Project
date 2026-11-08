@@ -2,9 +2,11 @@
 #define LCD_H
 
 #include <stdio.h>
+#include <stdbool.h>
 #include "commands.h"
 
-#define LCD_SPI_INSTANCE spi1
+#define LCD_PIO_INST pio0
+#define LCD_PIO_SM 0
 
 // LCD Screen Pins
 #define LCD_RX_PIN 12
@@ -17,13 +19,18 @@
 
 #define LCD_GRAM_SIZE 172800
 
+void lcd_init_pio();
+
 void lcd_init();
 void lcd_hw_rst();
 
+void lcd_set_display(bool on);
+void lcd_set_backlight(bool on);
+
 void lcd_issue_command(lcd_command_t command);
-void lcd_issue_command_with_args(lcd_command_t command, uint8_t *argv);
+void lcd_issue_command_with_args(lcd_command_t command, const uint8_t *argv);
 void lcd_issue_command_with_rets(lcd_command_t command, uint8_t *retv);
-void lcd_issue_command_with_all(lcd_command_t command, uint8_t *argv, uint8_t *retv);
+void lcd_issue_command_with_all(lcd_command_t command, const uint8_t *argv, uint8_t *retv);
 
 
 #endif

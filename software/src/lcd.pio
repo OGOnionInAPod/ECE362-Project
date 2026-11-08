@@ -1,0 +1,21 @@
+.program lcdspi
+
+.clock_div 150.0
+
+.side_set 2             ; bit0 = CSn, bit1 = SCK
+.set 1
+.out 1 left auto 9      ; bit0 = MOSI
+
+; Note: Using an autopull threshold of 9, we can drop the pull instruction
+.wrap_target
+    set y, 7            side 1  ; Load y scratch register with loop counter. Also set CSn high and SCK low
+    out x, 1            side 1  ; Check if this transfer is command (0) or data (1)
+    jmp !x command      side 1
+    set pins, 1         side 1  ; Transfer is data. Pull DC high
+    jmp transfer        side 1  ; Start transfer.
+command:
+    set pins, 0         side 1  ; Transfer is command. Pull DC low.
+transfer:
+    out pins, 1         side 0  ; Shift data bit onto MOSI. Pull SCK low and assert CS
+    jmp y-- transfer    side 2  ; If not done, decrement and repeat. Pull SCK high
+.wrap

@@ -10,9 +10,8 @@ int main() {
     init_uart_irq();
     setbuf(stdout, NULL);
 
-    lcd_init();
+    start_display();
 
-    display_loop();
-
+    while(1) { tight_loop_contents(); }
     return 0;
 }

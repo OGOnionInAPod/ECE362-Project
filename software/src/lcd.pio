@@ -1,6 +1,6 @@
 .program lcdspi
 
-.clock_div 150.0
+.clock_div 150
 
 .side_set 2             ; bit0 = CSn, bit1 = SCK
 .set 1

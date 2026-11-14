@@ -4,8 +4,6 @@
 #include "lcd/lcd.h"
 #include "pico/stdlib.h"
 
-static uint8_t gmem[LCD_GRAM_SIZE];
-
 #define DISPLAY_WIDTH  320
 #define DISPLAY_HEIGHT 240
 
@@ -16,7 +14,7 @@ static uint8_t gmem[LCD_GRAM_SIZE];
 #define BIN_MARGIN     ((DISPLAY_WIDTH - (BIN_COL_WIDTH * BIN_COUNT)) / 2)
 
 #define DISPLAY_UPDATE_ALARM_NUM 0
-#define DISPLAY_UPDATE_PERIOD 1000
+#define DISPLAY_UPDATE_PERIOD 1000000
 #define DISPLAY_UPDATE_TIMER_INST timer0_hw
 #define DISPLAY_UPDATE_ALARM_IRQ timer_hardware_alarm_get_irq_num(DISPLAY_UPDATE_TIMER_INST, DISPLAY_UPDATE_ALARM_NUM)
 
@@ -27,7 +25,7 @@ static uint8_t COLCONF[4] = {0x00, 0x00, 0x01, 0x3F}; // 0x13F = 319
 static uint16_t current_bin = 0;
 
 static uint8_t amps_previous[BIN_COUNT] = { 0 };
-static uint8_t amps_current[BIN_COUNT] = { 0 };
+static uint8_t amps_current[BIN_COUNT] = { 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100 };
 
 void set_colconf(uint16_t start, uint16_t end) {
     COLCONF[0] = (start >> 8) & 0xff;
@@ -46,48 +44,42 @@ void set_rowconf(uint16_t start, uint16_t end) {
 void update_bin_irq() {
     hw_clear_bits(&DISPLAY_UPDATE_TIMER_INST->intr, 1u << DISPLAY_UPDATE_ALARM_NUM);
 
-    uint16_t col_start = (current_bin  ) * BIN_COL_WIDTH + BIN_GAP + BIN_MARGIN;
+    uint16_t col_start = (current_bin * BIN_COL_WIDTH) + BIN_GAP + BIN_MARGIN;
     uint16_t col_end   = col_start + BIN_BAR_WIDTH - 1;
 
     set_colconf(col_start, col_end);
 
-    //lcd_issue_command_with_args(LCD_COM_CASET, COLCONF);
+    lcd_blocking_command_with_args(LCD_COM_CASET, COLCONF);
 
     uint8_t amp_previous = amps_previous[current_bin];
     uint8_t amp_current = amps_current[current_bin];
-    int16_t amp_delta = amp_current - amp_previous;
 
-    if (amp_delta > 0) {
-        //set_rowconf(amp_previous+120, amp_current+120);
-        /* Write the first delta */
-        //set_rowconf(119-amp_current, 119-amp_previous);
-        /* Write the second delta */
+    uint16_t upper_block_start, upper_block_end;
+    uint16_t lower_block_start, lower_block_end;
 
-        /*
-            1. Compute the start and end row for each delta block
-            2. Schedule a DMA transfer to send ROWCONF to the LCD
-            3. Schedule a DMA transfer to send the write command
-            4. Schedule a DMA transfer to transmit the data
-            Notes: These could be one DMA transfer, but that would
-            require a large buffer that accounts for the worst-case
-            scenario (amplitude delta of 0->119) plus the size of
-            the commands. This is wasteful, as the data written is
-            a constant color, and thus doesn't need a buffer allocated.
-            A single value with a non-incrementing read address would
-            suffice. If possible, best approach is to configure all
-            three, have 2 CHAIN_TO 3 CHAIN_TO 4. One set of these
-            for each of the two blocks.
-        */
-    } else if (amp_delta < 0) {
-        //set_rowconf(amp_current+120, amp_previous+120);
-        /* Write the first delta */
-        //set_rowconf(119-amp_previous, 119-amp_current);
-        /* Write the second delta */
-
-        /*
-            Replicate the above with different bounds
-        */
+    uint8_t fill_color;
+    size_t fill_size;
+    if (amp_current > amp_previous) {
+        fill_color = 0xff;
+        fill_size = (amp_current-amp_previous)*BIN_BAR_WIDTH*2;
+    } else {
+        fill_color = 0x00;
+        fill_size = (amp_previous-amp_current)*BIN_BAR_WIDTH*2;
     }
+
+    upper_block_start = 120 + MIN(amp_current, amp_previous);
+    upper_block_end   = 120 + MAX(amp_current, amp_previous);
+
+    lower_block_start = 119 - MAX(amp_current, amp_previous);
+    lower_block_end   = 119 - MIN(amp_current, amp_previous);
+
+    set_rowconf(upper_block_start, upper_block_end);
+    lcd_memset8(fill_color, fill_size);
+
+    set_rowconf(lower_block_start, lower_block_end);
+    lcd_memset8(fill_color, fill_size);
+
+    amps_previous[current_bin] = amps_current[current_bin];
 
     current_bin = (current_bin + 1) % (BIN_COUNT);
 
@@ -99,30 +91,27 @@ void start_display() {
 
     lcd_init();
 
-    lcd_issue_command(LCD_COM_SWRESET);
+    lcd_nonblocking_command(LCD_COM_SWRESET);
     sleep_ms(120); // 120ms needed before exiting sleep state
 
-    lcd_issue_command(LCD_COM_SLPOUT);
+    lcd_nonblocking_command(LCD_COM_SLPOUT);
     sleep_ms(5); // 5ms required to leave sleep
 
-    lcd_issue_command(LCD_COM_DISPON); // Display on
-
-    // Set initial r/w pointer behavior
-    lcd_issue_command_with_args(LCD_COM_MADCTL, &MADCTL);
-    lcd_issue_command_with_args(LCD_COM_PASET, ROWCONF);
-    lcd_issue_command_with_args(LCD_COM_CASET, COLCONF);
-
-    uint8_t color_arg = 0x55; // 16-bit pixels (as opposed to 18-bit packed)
-    lcd_issue_command_with_args(LCD_COM_PIXSET, &color_arg);
-
-    // This block fills the screen with white pixels
-    lcd_command_t dummy_write = LCD_COM_RAMWR;
-    dummy_write.argc = LCD_GRAM_SIZE;
-    memset(gmem, 0x0f, LCD_GRAM_SIZE);
-    lcd_issue_command_with_args(dummy_write, gmem);
+    lcd_nonblocking_command(LCD_COM_DISPON); // Display on
 
     lcd_set_display(true);
     lcd_set_backlight(true);
+
+    // Set initial r/w pointer behavior
+    lcd_blocking_command_with_args(LCD_COM_MADCTL, &MADCTL);
+    lcd_blocking_command_with_args(LCD_COM_PASET, ROWCONF);
+    lcd_blocking_command_with_args(LCD_COM_CASET, COLCONF);
+
+    uint8_t color_arg = 0x55; // 16-bit pixels (as opposed to 18-bit packed)
+    lcd_blocking_command_with_args(LCD_COM_PIXSET, &color_arg);
+
+    // Fill the screen
+    lcd_memset16(0x0000, 240*320);
 
     hw_set_bits(&DISPLAY_UPDATE_TIMER_INST->inte, 1u << DISPLAY_UPDATE_ALARM_NUM);
     irq_set_exclusive_handler(DISPLAY_UPDATE_ALARM_IRQ, update_bin_irq);

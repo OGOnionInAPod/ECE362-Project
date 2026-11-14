@@ -1,8 +1,10 @@
 #include <stdio.h>
 #include <string.h>
 #include "display.h"
-#include "lcd/lcd.h"
 #include "pico/stdlib.h"
+
+#include "lcd/lcd.h"
+#include "../lcd/transfer_queue/transfer_queue.h"
 
 #define DISPLAY_WIDTH  320
 #define DISPLAY_HEIGHT 240
@@ -14,7 +16,7 @@
 #define BIN_MARGIN     ((DISPLAY_WIDTH - (BIN_COL_WIDTH * BIN_COUNT)) / 2)
 
 #define DISPLAY_UPDATE_ALARM_NUM 0
-#define DISPLAY_UPDATE_PERIOD 1000000
+#define DISPLAY_UPDATE_PERIOD (16*1000)
 #define DISPLAY_UPDATE_TIMER_INST timer0_hw
 #define DISPLAY_UPDATE_ALARM_IRQ timer_hardware_alarm_get_irq_num(DISPLAY_UPDATE_TIMER_INST, DISPLAY_UPDATE_ALARM_NUM)
 
@@ -49,7 +51,7 @@ void update_bin_irq() {
 
     set_colconf(col_start, col_end);
 
-    lcd_blocking_command_with_args(LCD_COM_CASET, COLCONF);
+    lcd_nonblocking_command_with_args(LCD_COM_CASET, COLCONF);
 
     uint8_t amp_previous = amps_previous[current_bin];
     uint8_t amp_current = amps_current[current_bin];
@@ -103,12 +105,12 @@ void start_display() {
     lcd_set_backlight(true);
 
     // Set initial r/w pointer behavior
-    lcd_blocking_command_with_args(LCD_COM_MADCTL, &MADCTL);
-    lcd_blocking_command_with_args(LCD_COM_PASET, ROWCONF);
-    lcd_blocking_command_with_args(LCD_COM_CASET, COLCONF);
+    lcd_nonblocking_command_with_args(LCD_COM_MADCTL, &MADCTL);
+    lcd_nonblocking_command_with_args(LCD_COM_PASET, ROWCONF);
+    lcd_nonblocking_command_with_args(LCD_COM_CASET, COLCONF);
 
     uint8_t color_arg = 0x55; // 16-bit pixels (as opposed to 18-bit packed)
-    lcd_blocking_command_with_args(LCD_COM_PIXSET, &color_arg);
+    lcd_nonblocking_command_with_args(LCD_COM_PIXSET, &color_arg);
 
     // Fill the screen
     lcd_memset16(0x0000, 240*320);

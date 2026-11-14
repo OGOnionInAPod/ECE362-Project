@@ -2,12 +2,11 @@
 #include "pico/stdlib.h"
 #include "hardware/spi.h"
 #include "lcd.pio.h"
-#include "hardware/pio.h"
 #include "hardware/dma.h"
 
 #include <stdlib.h>
 
-#include "transfer_tracker/transfer_tracker.h"
+#include "transfer_queue/transfer_queue.h"
 
 void lcd_init() {
 
@@ -109,91 +108,55 @@ void lcd_blocking_command_with_all(lcd_command_t command, const uint8_t *argv, u
 }
 
 void lcd_memset8(uint8_t data, size_t len) {
-    lcd_command_t c = LCD_COM_RAMWR; c.argc = len;
-    lcd_nonblocking_command_with_all_wrapping(c, &data, NULL, 0);
+    uint32_t * comm_enc = malloc(sizeof(uint32_t));
+    if (comm_enc == NULL) { return; }
+    *comm_enc = lcd_encode_packet(LCD_COM_RAMWR.opcode, false);
+
+    enqueue_transfer(comm_enc, 1, -1);
+
+    uint32_t * data_enc = malloc(sizeof(uint32_t));
+    if (data_enc == NULL) { return; }
+    *data_enc = lcd_encode_packet(data, true);
+
+    enqueue_transfer(data_enc, len, 0);
 }
 
 void lcd_memset16(uint16_t data, size_t len) {
-    lcd_command_t c = LCD_COM_RAMWR; c.argc = 2*len;
-    uint16_t data_be = (data << 8) | (data >> 8);
-    lcd_nonblocking_command_with_all_wrapping(c, (uint8_t*)&data_be, NULL, 1);
+
+    uint32_t * comm_enc = malloc(sizeof(uint32_t));
+    if (comm_enc == NULL) { return; }
+    *comm_enc = lcd_encode_packet(LCD_COM_RAMWR.opcode, false);
+
+    enqueue_transfer(comm_enc, 1, -1);
+
+    uint32_t * data_enc = malloc(sizeof(uint32_t)*2);
+    if (data_enc == NULL) { return; }
+    data_enc[0] = lcd_encode_packet(data >> 8, true);
+    data_enc[1] = lcd_encode_packet(data << 8, true);
+
+    enqueue_transfer(data_enc, len*2, 1);
 }
 
 void lcd_nonblocking_command(lcd_command_t command) {
     assert((command.argc == 0) & (command.retc == 0));
-    lcd_nonblocking_command_with_all_wrapping(command, NULL, NULL, -1);
+    lcd_nonblocking_command_with_all(command, NULL, NULL);
 }
 
 void lcd_nonblocking_command_with_args(lcd_command_t command, const uint8_t *argv) {
     assert(command.retc == 0);
-    lcd_nonblocking_command_with_all_wrapping(command, argv, NULL, -1);
+    lcd_nonblocking_command_with_all(command, argv, NULL);
 }
 
 void lcd_nonblocking_command_with_all(lcd_command_t command, const uint8_t *argv, uint8_t * retv) {
-    lcd_nonblocking_command_with_all_wrapping(command, argv, retv, -1);
-}
-
-void lcd_nonblocking_command_with_all_wrapping(lcd_command_t command, const uint8_t *argv, uint8_t *retv, int wrapping) {
-
-    size_t effective_argc;
-    if (0 <= wrapping && wrapping < 31) {
-        effective_argc = 1u << wrapping;
-    }
-    else if (wrapping == -1) {
-        effective_argc = command.argc;
-    } else { return; }
 
     // Allocate for command + data elements in the transfer
-    uint32_t * comm_enc = malloc(sizeof(uint32_t));
-    if (comm_enc == NULL) { return; }
-
-    uint32_t * data_enc = malloc(sizeof(uint32_t) * effective_argc);
+    uint32_t * data_enc = malloc(sizeof(uint32_t) * (command.argc + 1));
     if (data_enc == NULL) { return; }
 
-    *comm_enc = lcd_encode_packet(command.opcode, false);
-    for (int arg = 0; arg < effective_argc; arg++) {
-        data_enc[arg] = lcd_encode_packet(argv[arg], true);
+    data_enc[0] = lcd_encode_packet(command.opcode, false);
+    for (int arg = 0; arg < command.argc; arg++) {
+        data_enc[arg+1] = lcd_encode_packet(argv[arg], true);
     }
 
-    // Get an idle DMA channel
-    int comm_chan = dma_claim_unused_channel(true);
-    int data_chan = dma_claim_unused_channel(true);
-
-    dma_channel_config_t comm_conf = dma_channel_get_default_config(comm_chan);
-    channel_config_set_dreq(&comm_conf, pio_get_dreq(LCD_PIO_INST, LCD_PIO_SM, true));
-    channel_config_set_transfer_data_size(&comm_conf, DMA_SIZE_32);
-    channel_config_set_chain_to(&comm_conf, data_chan);
-
-    dma_channel_configure(comm_chan, &comm_conf,
-        &LCD_PIO_INST->txf[LCD_PIO_SM],
-        comm_enc,
-        dma_encode_transfer_count(1),
-        false
-    );
-
-    dma_channel_config_t data_conf = dma_channel_get_default_config(data_chan);
-    channel_config_set_dreq(&data_conf, pio_get_dreq(LCD_PIO_INST, LCD_PIO_SM, true));
-    channel_config_set_transfer_data_size(&data_conf, DMA_SIZE_32);
-    channel_config_set_write_address_update_type(&data_conf, DMA_ADDRESS_UPDATE_NONE);
-    channel_config_set_irq_quiet(&data_conf, false);
-
-    if (wrapping > 0) {
-        channel_config_set_ring(&data_conf, false, wrapping);
-        channel_config_set_read_address_update_type(&data_conf, DMA_ADDRESS_UPDATE_INCREMENT);
-    } else if (wrapping == 0) {
-        channel_config_set_ring(&data_conf, false, 0);
-        channel_config_set_read_address_update_type(&data_conf, DMA_ADDRESS_UPDATE_NONE);
-    } else if (wrapping < 0) {
-        channel_config_set_ring(&data_conf, false, 0);
-        channel_config_set_read_address_update_type(&data_conf, DMA_ADDRESS_UPDATE_INCREMENT);
-    }
-
-    dma_channel_configure(data_chan, &data_conf,
-        &LCD_PIO_INST->txf[LCD_PIO_SM],
-        data_enc,
-        dma_encode_transfer_count(command.argc),
-        false
-    );
-
-    enqueue_transfer(comm_chan, data_chan, comm_enc, data_enc);
+    enqueue_transfer(data_enc, command.argc + 1, -1);
 }

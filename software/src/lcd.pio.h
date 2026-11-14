@@ -47,7 +47,6 @@ static inline pio_sm_config lcdspi_program_get_default_config(uint offset) {
     sm_config_set_out_shift(&c, 0, 1, 9);
     sm_config_set_set_pin_count(&c, 1);
     sm_config_set_sideset(&c, 2, false, false);
-    sm_config_set_clkdiv_int_frac(&c, 150, 0);
     return c;
 }
 #endif

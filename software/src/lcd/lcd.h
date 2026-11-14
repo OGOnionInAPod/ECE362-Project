@@ -3,6 +3,9 @@
 
 #include <stdio.h>
 #include <stdbool.h>
+
+#include "hardware/pio.h"
+
 #include "commands/commands.h"
 
 #define LCD_PIO_INST pio0
@@ -44,7 +47,6 @@ void lcd_memset16(uint16_t data, size_t len);
 void lcd_nonblocking_command(lcd_command_t command);
 void lcd_nonblocking_command_with_args(lcd_command_t command, const uint8_t *argv);
 void lcd_nonblocking_command_with_all(lcd_command_t command, const uint8_t *argv, uint8_t *retv);
-void lcd_nonblocking_command_with_all_wrapping(lcd_command_t command, const uint8_t *argv, uint8_t *retv, int wrapping);
 
 void lcd_memset(const uint8_t *data, int transfer_count, int wrapping);
 

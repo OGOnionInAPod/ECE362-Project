@@ -16,7 +16,7 @@
 #define BIN_MARGIN     ((DISPLAY_WIDTH - (BIN_COL_WIDTH * BIN_COUNT)) / 2)
 
 #define DISPLAY_UPDATE_ALARM_NUM 0
-#define DISPLAY_UPDATE_PERIOD (16*1000)
+#define DISPLAY_UPDATE_PERIOD (16*1000/BIN_COUNT)
 #define DISPLAY_UPDATE_TIMER_INST timer0_hw
 #define DISPLAY_UPDATE_ALARM_IRQ timer_hardware_alarm_get_irq_num(DISPLAY_UPDATE_TIMER_INST, DISPLAY_UPDATE_ALARM_NUM)
 
@@ -76,9 +76,11 @@ void update_bin_irq() {
     lower_block_end   = 119 - MIN(amp_current, amp_previous);
 
     set_rowconf(upper_block_start, upper_block_end);
+    lcd_nonblocking_command_with_args(LCD_COM_PASET, ROWCONF);
     lcd_memset8(fill_color, fill_size);
 
     set_rowconf(lower_block_start, lower_block_end);
+    lcd_nonblocking_command_with_args(LCD_COM_PASET, ROWCONF);
     lcd_memset8(fill_color, fill_size);
 
     amps_previous[current_bin] = amps_current[current_bin];
@@ -118,8 +120,22 @@ void start_display() {
     hw_set_bits(&DISPLAY_UPDATE_TIMER_INST->inte, 1u << DISPLAY_UPDATE_ALARM_NUM);
     irq_set_exclusive_handler(DISPLAY_UPDATE_ALARM_IRQ, update_bin_irq);
     irq_clear(DISPLAY_UPDATE_ALARM_IRQ);
+    irq_set_priority(DISPLAY_UPDATE_ALARM_IRQ, PICO_LOWEST_IRQ_PRIORITY);
     irq_set_enabled(DISPLAY_UPDATE_ALARM_IRQ, true);
 
     uint64_t target = DISPLAY_UPDATE_TIMER_INST->timerawl + DISPLAY_UPDATE_PERIOD;
     DISPLAY_UPDATE_TIMER_INST->alarm[DISPLAY_UPDATE_ALARM_NUM] = (uint32_t)target;
+}
+
+int display_get_bin_count() {
+    return BIN_COUNT;
+}
+
+void display_set_amplitudes(const uint8_t * amps, size_t offset, size_t num) {
+    assert((offset + num) <= BIN_COUNT);
+    irq_set_enabled(DISPLAY_UPDATE_ALARM_IRQ, false);
+    for (int i = offset; i < (offset+num); i++) {
+        amps_current[i] = amps[i-offset];
+    }
+    irq_set_enabled(DISPLAY_UPDATE_ALARM_IRQ, true);
 }

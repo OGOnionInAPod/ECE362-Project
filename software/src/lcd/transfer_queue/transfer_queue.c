@@ -8,7 +8,7 @@
 #include "../lcd.h"
 
 #define COMPLETED_IRQ_NUM 0
-#define QUEUE_MAX_LEN_BITS 6
+#define QUEUE_MAX_LEN_BITS 8
 
 /*
  * Note: We need to update the read address, transfer count, and
@@ -37,7 +37,7 @@ static transfer_control_block_t TRANSFER_QUEUE[1u << QUEUE_MAX_LEN_BITS];
 
 static int transfer_channel;
 
-static size_t qhead;
+static volatile size_t qhead;
 static volatile size_t qservicing;
 static volatile bool qidle;
 
@@ -89,7 +89,10 @@ void init_transfer_queue() {
 
 void enqueue_transfer(uint32_t *transfer_data, size_t transfer_count, int wrapping) {
 
-    if (transfer_count == 0) { return; }
+    if (transfer_count == 0) {
+        free(transfer_data);
+        return;
+    }
 
     while ((qhead + 1) % (1u << QUEUE_MAX_LEN_BITS) == qservicing) {
         tight_loop_contents();

@@ -115,7 +115,10 @@ void lcd_memset8(uint8_t data, size_t len) {
     enqueue_transfer(comm_enc, 1, -1);
 
     uint32_t * data_enc = malloc(sizeof(uint32_t));
-    if (data_enc == NULL) { return; }
+    if (data_enc == NULL) {
+        free(comm_enc);
+        return;
+    }
     *data_enc = lcd_encode_packet(data, true);
 
     enqueue_transfer(data_enc, len, 0);
@@ -130,7 +133,10 @@ void lcd_memset16(uint16_t data, size_t len) {
     enqueue_transfer(comm_enc, 1, -1);
 
     uint32_t * data_enc = malloc(sizeof(uint32_t)*2);
-    if (data_enc == NULL) { return; }
+    if (data_enc == NULL) {
+        free(comm_enc);
+        return;
+    }
     data_enc[0] = lcd_encode_packet(data >> 8, true);
     data_enc[1] = lcd_encode_packet(data << 8, true);
 

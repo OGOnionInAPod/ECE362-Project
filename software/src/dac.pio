@@ -1,0 +1,22 @@
+.program daci2s
+.side_set 2                         ; bit1 = BCLK; bit0 = WSEL
+.out 1 left
+
+.wrap_target
+    pull noblock                    side 0b00       ;
+    out pins, 1                     side 0b00       ; left MSB
+    set y, 13                       side 0b10   [1] ;
+left_loop:                                          ; left bits 1..14
+    out pins, 1                     side 0b00   [1] ;
+    jmp y-- left_loop               side 0b10   [1] ;
+    out pins, 1                     side 0b01   [1] ; left LSB, WS rises here
+    nop                             side 0b11   [1] ;
+
+    out pins, 1                     side 0b01   [1] ; right MSB
+    set y, 13                       side 0b11   [1] ;
+right_loop:                                         ; right bits 1..14
+    out pins, 1                     side 0b01   [1] ;
+    jmp y-- right_loop              side 0b11   [1] ;
+    out pins, 1                     side 0b00   [1] ; right LSB, WS falls here
+    nop                             side 0b10   [1] ;
+.wrap

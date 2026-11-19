@@ -8,6 +8,15 @@
 
 #include "transfer_queue/transfer_queue.h"
 
+// LCD Screen Pins
+#define LCD_RX_PIN 12
+#define LCD_CSn_PIN 13
+#define LCD_SCK_PIN 14
+#define LCD_TX_PIN 15
+#define LCD_DC_PIN 16
+#define LCD_RST_PIN 17
+#define LCD_LED_PIN 18
+
 void lcd_init() {
 
     // Setup LCD and RESET as regular GPIO controllable pins. PIO doesn't need these

@@ -10,22 +10,6 @@
 #define COMPLETED_IRQ_NUM 0
 #define QUEUE_MAX_LEN_BITS 8
 
-/*
- * Note: We need to update the read address, transfer count, and
- * control register for each transfer. The write address always
- * targets the same peripheral, but we will always write them
- * all anyways, since there's no config that gives us trigger
- * without the write address for a transfer length of 3
- *
- *            +0x0        +0x4          +0x8          +0xC (Trigger)
- * Alias 0: | READ_ADDR | WRITE_ADDR  | TRANS_COUNT | CTRL
- * Alias 1: | CTRL      | READ_ADDR   | WRITE_ADDR  | TRANS_COUNT
- * Alias 2: | CTRL      | TRANS_COUNT | READ_ADDR   | WRITE_ADDR
- * Alias 3: | CTRL      | WRITE_ADDR  | TRANS_COUNT | READ_ADDR
- * 
- * So we match that order in the structure.
- */
-
 typedef struct {
     uint32_t read_address;
     uint32_t write_address;

@@ -7,7 +7,7 @@
 */ // Moved to lcd.h
 
 // I2C Bus
-#define I2C_SCL_PIN 9
+#define I2C_SCL_PIN 11
 #define I2C_SDA_PIN 10
 
 // I2S/TDM (PIO)

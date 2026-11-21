@@ -1,6 +1,5 @@
 #include "codec.h"
 
-#include <stddef.h> //to ensure NULL is correctly in here
 #include "hardware/i2c.h"
 #include "hardware/gpio.h"
 
@@ -12,15 +11,12 @@
 #define I2C_SDA_PIN 10
 #define CODEC_I2C_INST i2c1
 
-//side note- consider maybe using timeout later if we encounter problems for i2c_read or i2c_write those verisons are 
-//i2c_read_timeout_us and i2c_write_timeout_us
-
 //initialize rp2350 hardware so it can communicate w/ the ADC and DAC
 
 bool codec_init(void) {
-    // Initialize I2C1 at 100 kHz
-    //done bc correlates with standard mode, 100kHz. standard mode since works with everything better
-    i2c_init(CODEC_I2C_INST, 100000);
+    // Iniitialize I2C in fast mode because ADC and DAC both support it and ADC
+    // sample rate is limited by the I2C protocol
+    i2c_init(CODEC_I2C_INST, 400000);
 
     gpio_set_function(I2C_SDA_PIN, GPIO_FUNC_I2C);
     gpio_set_function(I2C_SCL_PIN, GPIO_FUNC_I2C);

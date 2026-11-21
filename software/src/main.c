@@ -87,12 +87,12 @@ int main() {
         uint8_t normalized[30];
         for (int i = 0; i < display_get_bin_count(); i++) {
             ads7128_read_sample(&samples[i], &channel);
-            if (channel != 0) {
+            if (channel != 1) {
                 i--;
             } else {
                 normalized[i] = (uint8_t)(samples[i] * (119.0f/4095.0f));
             }
-            pcm5122_send_sample(
+            pcm5122_set_output(
                 samples[i] << 19,
                 samples[i] << 19
             );

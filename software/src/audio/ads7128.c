@@ -67,7 +67,7 @@ bool ads7128_init(void) {
     }
 
     //select AIN0, AIN1, and AIN2 for sequencing (sequencing is when i2c loops through selected channels for our analog data)
-    if (!ads7128_write_register(ADS7128_REG_AUTO_SEQ_CH_SEL, 0x07)) {
+    if (!ads7128_write_register(ADS7128_REG_AUTO_SEQ_CH_SEL, 0x02)) {
         return false;
     }
 
@@ -77,7 +77,7 @@ bool ads7128_init(void) {
     }
 
     //verify the correct channels are enabled
-    if (value != 0x07) {
+    if (value != 0x02) {
         return false;
     }
 

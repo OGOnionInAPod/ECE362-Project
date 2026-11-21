@@ -3,11 +3,13 @@
 #include "pico/stdlib.h"
 #include "hardware/i2c.h"
 
-#include "lcd/lcd.h"
 #include "uart/uart.h"
 
 #include "audio/codec.h"
 #include "audio/pcm5122.h"
+#include "audio/ads7128.h"
+
+#include "display/display.h"
 
 #define I2C_SDA_PIN 10
 #define I2C_SCL_PIN 11
@@ -31,6 +33,8 @@ int main() {
     } else {
         printf("Error initializing audio hardware!\n");
     }
+
+    start_display();
 
 
     /* DISPLAY TEST
@@ -76,22 +80,24 @@ int main() {
     }
     */
 
-    uint8_t v;
-    pcm5122_read_register(PCM5122_REG_PWRSTT, &v);
-    printf("Power State: %#x\n", v);
-    pcm5122_read_register(91, &v);
-    printf("Sampling Flags 1: %#x\n", v);
-    pcm5122_read_register(92, &v);
-    printf("Sampling Flags 2: %#x\n", v);
-    pcm5122_read_register(93, &v);
-    printf("Sampling Flags 3: %#x\n", v);
-    pcm5122_read_register(94, &v);
-    printf("Sampling Flags 4: %#x\n", v);
 
     while(1) {
-        pcm5122_send_sample(0xdead, 0xbeef);
+        uint8_t channel;
+        uint16_t samples[30];
+        uint8_t normalized[30];
+        for (int i = 0; i < display_get_bin_count(); i++) {
+            ads7128_read_sample(&samples[i], &channel);
+            if (channel != 0) {
+                i--;
+            } else {
+                normalized[i] = (uint8_t)(samples[i] * (119.0f/4095.0f));
+            }
+            pcm5122_send_sample(
+                samples[i] << 19,
+                samples[i] << 19
+            );
+        }
+        display_set_amplitudes(normalized, 0, display_get_bin_count());
     }
     return 0;
-
-
 }

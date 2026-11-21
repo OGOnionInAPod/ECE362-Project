@@ -50,11 +50,11 @@ bool pcm5122_init() {
     }
     pio_sm_set_enabled(PCM5122_PIO_INST, PCM5122_PIO_SM, true);
 
-    sleep_ms(200); // Should be more than enough for device startup
-
+    if (!pcm5122_write_register(PCM5122_REG_PLLREF, 0x10)) { return false; } // PLL reference is BCLK
     if (!pcm5122_write_register(PCM5122_REG_IGRFLG, 0x18)) { return false; } // Disable missing SCK and halt detection
     if (!pcm5122_write_register(PCM5122_REG_I2SFMT, 0x03)) { return false; } // Set I2S word length to 32 (64 per frame)
 
+    sleep_ms(200); // Should be more than enough for device startup
 
     return true;
 }

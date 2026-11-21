@@ -27,7 +27,7 @@ static const uint16_t daci2s_program_instructions[] = {
     0xb942, //  6: nop                    side 3 [1]
     0x8880, //  7: pull   noblock         side 1
     0x6801, //  8: out    pins, 1         side 1
-    0xf95e, //  9: set    y, 30           side 3 [1]
+    0xf95d, //  9: set    y, 29           side 3 [1]
     0x6901, // 10: out    pins, 1         side 1 [1]
     0x198a, // 11: jmp    y--, 10         side 3 [1]
     0x6101, // 12: out    pins, 1         side 0 [1]

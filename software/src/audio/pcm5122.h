@@ -3,6 +3,8 @@
 
 #include "pico/stdlib.h"
 
+#define PCM5122_REG_PLLREF 13
+#define PCM5122_REG_DACREF 14
 #define PCM5122_REG_IGRFLG 37
 #define PCM5122_REG_I2SFMT 40
 #define PCM5122_REG_PWRSTT 118

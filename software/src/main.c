@@ -76,9 +76,17 @@ int main() {
     }
     */
 
-    uint8_t v; pcm5122_read_register(PCM5122_REG_PWRSTT, &v);
-
+    uint8_t v;
+    pcm5122_read_register(PCM5122_REG_PWRSTT, &v);
     printf("Power State: %#x\n", v);
+    pcm5122_read_register(91, &v);
+    printf("Sampling Flags 1: %#x\n", v);
+    pcm5122_read_register(92, &v);
+    printf("Sampling Flags 2: %#x\n", v);
+    pcm5122_read_register(93, &v);
+    printf("Sampling Flags 3: %#x\n", v);
+    pcm5122_read_register(94, &v);
+    printf("Sampling Flags 4: %#x\n", v);
 
     while(1) {
         pcm5122_send_sample(0xdead, 0xbeef);

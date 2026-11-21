@@ -44,22 +44,10 @@ void dac_init() {
 
     pio_sm_init(DAC_PIO_INST, DAC_PIO_SM, 0, &c);
     pio_sm_set_enabled(DAC_PIO_INST, DAC_PIO_SM, true);
-
+    
     sleep_ms(200);
 
-    dac_reg_write(2, 0x01);  // Power down
-    sleep_ms(100);
-    dac_reg_write(2, 0x10);  // Standby
-    sleep_ms(100);
-    dac_reg_write(1, 0x11);  // Reset registers and modules
-    sleep_ms(100);
-    dac_reg_write(2, 0x00);  // Leave standby?
-    sleep_ms(100);
-
-
-    dac_reg_write(13, 0x10); // Set PLL reference to BCLK
-    dac_reg_write(14, 0x10); // Set DAC clock source to the PLL
-    dac_reg_write(37, 0x10); // Disable missing SCK detection
+    dac_reg_write(37, 0x18); // Disable missing SCK and halt detection
     dac_reg_write(40, 0x00); // Set I2S word length to 16
 }
 

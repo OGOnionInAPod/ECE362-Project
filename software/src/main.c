@@ -53,7 +53,7 @@ int main() {
     printf("Power State Register: %#x\n", dac_reg_read(118));
 
     while(1) {
-        dac_send_sample(0xdeadbeef);
+        dac_send_sample(0x7fff7fff);
     }
     return 0;
 }

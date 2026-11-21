@@ -3,18 +3,19 @@
 .out 1 left
 
 .wrap_target
-    pull noblock                    side 0b00       ;
+    pull noblock                    side 0b00       ; fetch left word
     out pins, 1                     side 0b00       ; left MSB
-    set y, 13                       side 0b10   [1] ;
-left_loop:                                          ; left bits 1..14
+    set y, 29                       side 0b10   [1] ;
+left_loop:                                          ; left bits 1..30
     out pins, 1                     side 0b00   [1] ;
     jmp y-- left_loop               side 0b10   [1] ;
     out pins, 1                     side 0b01   [1] ; left LSB, WS rises here
     nop                             side 0b11   [1] ;
 
-    out pins, 1                     side 0b01   [1] ; right MSB
-    set y, 13                       side 0b11   [1] ;
-right_loop:                                         ; right bits 1..14
+    pull noblock                    side 0b01       ; fetch right word
+    out pins, 1                     side 0b01       ; right MSB
+    set y, 30                       side 0b11   [1] ;
+right_loop:                                         ; right bits 1..30
     out pins, 1                     side 0b01   [1] ;
     jmp y-- right_loop              side 0b11   [1] ;
     out pins, 1                     side 0b00   [1] ; right LSB, WS falls here

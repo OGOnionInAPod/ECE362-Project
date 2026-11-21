@@ -13,31 +13,32 @@
 // ------ //
 
 #define daci2s_wrap_target 0
-#define daci2s_wrap 12
+#define daci2s_wrap 13
 #define daci2s_pio_version 0
 
 static const uint16_t daci2s_program_instructions[] = {
             //     .wrap_target
     0x8080, //  0: pull   noblock         side 0
     0x6001, //  1: out    pins, 1         side 0
-    0xf14d, //  2: set    y, 13           side 2 [1]
+    0xf15d, //  2: set    y, 29           side 2 [1]
     0x6101, //  3: out    pins, 1         side 0 [1]
     0x1183, //  4: jmp    y--, 3          side 2 [1]
     0x6901, //  5: out    pins, 1         side 1 [1]
     0xb942, //  6: nop                    side 3 [1]
-    0x6901, //  7: out    pins, 1         side 1 [1]
-    0xf94d, //  8: set    y, 13           side 3 [1]
-    0x6901, //  9: out    pins, 1         side 1 [1]
-    0x1989, // 10: jmp    y--, 9          side 3 [1]
-    0x6101, // 11: out    pins, 1         side 0 [1]
-    0xb142, // 12: nop                    side 2 [1]
+    0x8880, //  7: pull   noblock         side 1
+    0x6801, //  8: out    pins, 1         side 1
+    0xf95e, //  9: set    y, 30           side 3 [1]
+    0x6901, // 10: out    pins, 1         side 1 [1]
+    0x198a, // 11: jmp    y--, 10         side 3 [1]
+    0x6101, // 12: out    pins, 1         side 0 [1]
+    0xb142, // 13: nop                    side 2 [1]
             //     .wrap
 };
 
 #if !PICO_NO_HARDWARE
 static const struct pio_program daci2s_program = {
     .instructions = daci2s_program_instructions,
-    .length = 13,
+    .length = 14,
     .origin = -1,
     .pio_version = daci2s_pio_version,
 #if PICO_PIO_VERSION > 0

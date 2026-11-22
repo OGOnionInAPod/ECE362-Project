@@ -140,11 +140,13 @@ int main() {
             break;
         }
 
-        //Print samples for testing
         for (int i = 0; i < ADS7128_DMA_SAMPLES; i++) {
-            printf("Channel %u: %u\n",
-                (unsigned)channels[i],
-                (unsigned)samples[i]);
+            if (channels[i] != 1) {
+                printf("Unexpected channel: %u\n",
+                    (unsigned)channels[i]);
+            } else {
+                printf("AIN1: %u\n", (unsigned)samples[i]);
+            }
         }
 
         sleep_ms(500);

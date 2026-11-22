@@ -12,6 +12,7 @@
 //ADS7128 command opcodes, got from datasheet 8.5/8.6
 #define ADS7128_WRITE_OPCODE 0x08
 #define ADS7128_READ_OPCODE  0x10
+#define ADS7128_REG_CHANNEL_SEL 0x11
 
 
 #define ADS7128_REG_SEQUENCE_CFG 0x10 //sequence configuration register (SEQUENCE_CFG)
@@ -50,10 +51,10 @@ bool ads7128_read_register(uint8_t reg, uint8_t *value) {
 
 bool ads7128_init(void) {
     uint8_t value = 0;
-
-    //configure all 8 channels as analog inputs (last 5 don't matter bc selecting first 3 only but all can be analog input)
-    //from pcb I assume we're only using 3 channels A0, A1, A2
-    if (!ads7128_write_register(ADS7128_REG_PIN_CFG, 0x00)) { //write 0x00 (all 0's) to the PIN_CFG register so all are analog inputs
+    
+    //Configure all pins as analog inputs
+    //Only AIN1 will be selected for conversion
+    if (!ads7128_write_register(ADS7128_REG_PIN_CFG, 0x00)) { 
         return false;
     }
 
@@ -66,23 +67,22 @@ bool ads7128_init(void) {
         return false;
     }
 
-    //select AIN0, AIN1, and AIN2 for sequencing (sequencing is when i2c loops through selected channels for our analog data)
-    if (!ads7128_write_register(ADS7128_REG_AUTO_SEQ_CH_SEL, 0x07)) { //switched back to 0x07 so we're using all 3 channels again (up for change if better option)
+    //Disable automatic sequencing (manual mode)
+    if (!ads7128_write_register(ADS7128_REG_SEQUENCE_CFG, 0x00)) {
         return false;
     }
 
-    //read back the channel selection
-    if (!ads7128_read_register(ADS7128_REG_AUTO_SEQ_CH_SEL, &value)) {
+    //Select AIN1 as the only ADC input
+    if (!ads7128_write_register(ADS7128_REG_CHANNEL_SEL, 0x01)) {
         return false;
     }
 
-    //verify the correct channels are enabled
-    if (value != 0x07) {
+    //Verify AIN1 is selected
+    if (!ads7128_read_register(ADS7128_REG_CHANNEL_SEL, &value)) {
         return false;
     }
 
-    //select automatic sequencing mode
-    if (!ads7128_write_register(ADS7128_REG_SEQUENCE_CFG, 0x01)) {
+    if ((value & 0x0F) != 0x01) {
         return false;
     }
 
@@ -97,21 +97,6 @@ bool ads7128_init(void) {
     }
 
     if (value != ADS7128_APPEND_CHANNEL_ID) {
-        return false;
-    }
-
-    //enable automatic sequencing
-    if (!ads7128_write_register(ADS7128_REG_SEQUENCE_CFG, 0x11)) { 
-        return false;
-    }
-
-    //read back the sequencing configuration
-    if (!ads7128_read_register(ADS7128_REG_SEQUENCE_CFG, &value)) {
-        return false;
-    }
-
-    //verify automatic sequencing is enabled
-    if (value != 0x11) {
         return false;
     }
 

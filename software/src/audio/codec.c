@@ -14,16 +14,26 @@
 //initialize rp2350 hardware so it can communicate w/ the ADC and DAC
 
 bool codec_init(void) {
-    // Iniitialize I2C in fast mode because ADC and DAC both support it and ADC
-    // sample rate is limited by the I2C protocol
+
+    //Initialize I2C1 at 400 kHz for DAC
     i2c_init(CODEC_I2C_INST, 400000);
 
     gpio_set_function(I2C_SDA_PIN, GPIO_FUNC_I2C);
     gpio_set_function(I2C_SCL_PIN, GPIO_FUNC_I2C);
 
-    if (!ads7128_init()) { return false; }
-    if (!pcm5122_init()) { return false; }
-    
+    //Initialize the DAC first at 400 kHz
+    if (!pcm5122_init()) {
+        return false;
+    }
+
+    //Increase I2C speed to 1 MHz for ADC
+    i2c_set_baudrate(CODEC_I2C_INST, 1000000);
+
+    //Initialize the ADC
+    if (!ads7128_init()) {
+        return false;
+    }
+
     return true;
 }
 

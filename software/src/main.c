@@ -5,6 +5,8 @@
 
 #include "uart/uart.h"
 
+#include "audio/ads7128_dma.h"
+
 #include "audio/codec.h"
 #include "audio/pcm5122.h"
 #include "audio/ads7128.h"
@@ -32,6 +34,13 @@ int main() {
         printf("Audio hardware successfully initialized!\n");
     } else {
         printf("Error initializing audio hardware!\n");
+        return 1; //we don't want to test dma just get out
+    }
+
+    //Initialize DMA for ADC
+    if (!ads7128_dma_init()) {
+        printf("ADC DMA initialization failed\n");
+        return 1;
     }
 
     start_display();
@@ -81,23 +90,65 @@ int main() {
     */
 
 
-    while(1) {
-        uint8_t channel;
-        uint16_t samples[30];
-        uint8_t normalized[30];
-        for (int i = 0; i < display_get_bin_count(); i++) {
-            ads7128_read_sample(&samples[i], &channel);
-            if (channel != 1) {
-                i--;
-            } else {
-                normalized[i] = (uint8_t)(samples[i] * (119.0f/4095.0f));
-            }
-            pcm5122_set_output(
-                samples[i] << 19,
-                samples[i] << 19
-            );
+    // while(1) {
+    //     uint8_t channel;
+    //     uint16_t samples[30];
+    //     uint8_t normalized[30];
+    //     for (int i = 0; i < display_get_bin_count(); i++) {
+    //         ads7128_read_sample(&samples[i], &channel);
+    //         if (channel != 1) {
+    //             i--;
+    //         } else {
+    //             normalized[i] = (uint8_t)(samples[i] * (119.0f/4095.0f));
+    //         }
+    //         pcm5122_set_output(
+    //             samples[i] << 19,
+    //             samples[i] << 19
+    //         );
+    //     }
+    //     display_set_amplitudes(normalized, 0, display_get_bin_count());
+    // }
+    // return 0;
+
+    
+    uint16_t samples[ADS7128_DMA_SAMPLES];
+    uint8_t channels[ADS7128_DMA_SAMPLES];
+
+    while (1) {
+
+        //Start collecting ADC samples using DMA
+        if (!ads7128_dma_start()) {
+            printf("DMA start failed\n");
+            break;
         }
-        display_set_amplitudes(normalized, 0, display_get_bin_count());
+
+        //Wait for DMA to finish
+        int status;
+        do {
+            status = ads7128_dma_poll();
+        } while (status == 1);
+
+        //Check for successful transfer
+        if (status != 2) {
+            printf("DMA transfer failed\n");
+            break;
+        }
+
+        //Retrieve samples from DMA buffer
+        if (!ads7128_dma_get_samples(samples, channels)) {
+            printf("Failed to retrieve samples\n");
+            break;
+        }
+
+        //Print samples for testing
+        for (int i = 0; i < ADS7128_DMA_SAMPLES; i++) {
+            printf("Channel %u: %u\n",
+                (unsigned)channels[i],
+                (unsigned)samples[i]);
+        }
+
+        sleep_ms(500);
     }
+
     return 0;
 }

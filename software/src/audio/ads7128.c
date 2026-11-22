@@ -67,7 +67,7 @@ bool ads7128_init(void) {
     }
 
     //select AIN0, AIN1, and AIN2 for sequencing (sequencing is when i2c loops through selected channels for our analog data)
-    if (!ads7128_write_register(ADS7128_REG_AUTO_SEQ_CH_SEL, 0x02)) {
+    if (!ads7128_write_register(ADS7128_REG_AUTO_SEQ_CH_SEL, 0x07)) { //switched back to 0x07 so we're using all 3 channels again (up for change if better option)
         return false;
     }
 
@@ -77,7 +77,7 @@ bool ads7128_init(void) {
     }
 
     //verify the correct channels are enabled
-    if (value != 0x02) {
+    if (value != 0x07) {
         return false;
     }
 
@@ -142,3 +142,38 @@ bool ads7128_read_sample(uint16_t *sample, uint8_t *channel) { //Retrieve one 12
 
     return true;
 }
+
+
+
+#define ADS7128_BURST_MAX_SAMPLES 64
+
+bool ads7128_read_samples(uint16_t *samples, uint8_t *channels, size_t count) { //read multiple ADC samples
+
+    if (samples == NULL || channels == NULL || count == 0 || count > ADS7128_BURST_MAX_SAMPLES) {
+        return false;
+    }
+
+    //each ADC conversion produces 2 bytes
+    uint8_t raw[ADS7128_BURST_MAX_SAMPLES * 2]; //so make an array that handles max count for our max samples of 64
+
+    //read multiple conversions in one I2C transaction
+    int result = i2c_read_blocking(codec_get_i2c_inst(), ADS7128_ADDR, raw, count * 2, false);
+
+    if (result != (int)(count * 2)) {
+        return false;
+    }
+
+    //decode each 16-bit conversion frame
+    for (size_t i = 0; i < count; i++) { //extract each sample and its channel
+
+        uint8_t high = raw[i * 2];
+        uint8_t low  = raw[i * 2 + 1];
+
+        samples[i] = ((uint16_t)high << 4) | (low >> 4);
+
+        channels[i] = low & 0x0F;
+    }
+
+    return true;
+}
+
